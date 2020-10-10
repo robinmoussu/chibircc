@@ -43,9 +43,14 @@ fail() {
 
 assert 0 0
 assert 42 42
+assert 21 '5+20-4'
 
-fail 0 '' 'the exit code must be non empty'
-fail 0 'a' 'the exit code must be a number'
+fail 0 '' 'the expression must be non empty'
+fail 0 'a' 'expecting a number at the beggining of the expression'
+fail 0 '3+' "unexpected end of input after '+'"
+fail 0 '3+a' "expecting a number after '+' at index 2"
+fail 0 '3-' "unexpected end of input after '-'"
+fail 0 '3-a' "expecting a number after '-' at index 2"
 
 rm tmp tmp.s 2>/dev/null
 echo OK
